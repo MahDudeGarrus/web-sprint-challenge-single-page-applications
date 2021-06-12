@@ -39,7 +39,7 @@ const App = () => {
 
   return (
     <>
-    <nav>
+    {/* <nav>
       <h1>Lambda Eats</h1>
         <li>
           <Link to="/form">Order Here</Link>
@@ -48,22 +48,22 @@ const App = () => {
         <li>
           <Link to="/">Home</Link>
         </li> 
-    </nav>
+    </nav> */}
       
       <p>You can remove this code and create your own header</p>
 
       {/* rendering components inside of routes*/}
-      <Route exact path="/">
+      {/* <Route exact path="/"> */}
         <Home />
-      </Route>
+      {/* </Route> */}
 
-      <Route path="/form">
+      {/* <Route path="/form"> */}
         <Form values={pizzaOrder}/>
-      </Route>
+      {/* </Route> */}
       
-      <Route path="/confirmation">
+      {/* <Route path="/confirmation"> */}
         <Confirmation />
-      </Route>
+      {/* </Route> */}
       
     </>
   );
