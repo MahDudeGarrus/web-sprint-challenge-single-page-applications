@@ -3,13 +3,10 @@ import Form from './components/Form'
 import Confirmation from './components/Confirmation'
 
 const initialPizzaForm = {
+  name: '',
   size: '',
-  tomato: false,
-  garlic: false,
-  butter: false,
-  triple:false,
-  sundried: false,
-  toppings1: false,
+  sauce: '',
+  toppings: false,
   toppings2: false,
   toppings3: false,
   toppings4: false,
@@ -23,7 +20,7 @@ const initialPizzaForm = {
   toppings12: false,
   toppings13: false,
   toppings14: false,
-  intructions: '',
+  special: '',
 }
 
 const App = () => {
@@ -35,7 +32,7 @@ const App = () => {
     <>
       <h1>Lambda Eats</h1>
       <p>You can remove this code and create your own header</p>
-      <Form />
+      <Form values={pizzaOrder}/>
       <Confirmation />
     </>
   );
