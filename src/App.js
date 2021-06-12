@@ -35,6 +35,9 @@ const App = () => {
   // States
   const [pizzaOrder, setPizzaOrder] = useState(initialPizzaForm)
 
+  const inputChange = (name, value) => {
+    setPizzaOrder({...pizzaOrder, [name]: value})
+  }
 
 
   return (
@@ -58,7 +61,7 @@ const App = () => {
       {/* </Route> */}
 
       {/* <Route path="/form"> */}
-        <Form values={pizzaOrder}/>
+        <Form values={pizzaOrder} change={inputChange}/>
       {/* </Route> */}
       
       {/* <Route path="/confirmation"> */}
