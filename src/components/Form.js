@@ -2,7 +2,7 @@ import React, {useState, UseEffect} from 'react';
 
 export default function Form(props) {
 
-    const {values, change} = props
+    const {values, change, submit} = props
 
     const changes = (event) => {
         const {name, value, type, checked} = event.target
@@ -12,7 +12,8 @@ export default function Form(props) {
 
     //helper for submit
     const onSubmit = event => {
-        //event.preventDefault()
+        event.preventDefault()
+        submit()
     }
     
     return (
@@ -40,7 +41,7 @@ export default function Form(props) {
             
             <div className='sauceSelect'>
                 <h3>Choice of Sauce</h3>
-                    <label> Tomato Sauce <input type='radio' name='sauce' value='tomato'onChange={changes}/> </label>
+                    <label> Tomato Sauce <input type='radio' name='sauce' value='tomato' onChange={changes}/> </label>
                     <label> Garlic Alfredo <input type='radio' name='sauce' value='garlic' onChange={changes}/> </label>
                     <label> Butter Parmesan <input type='radio' name='sauce' value='butter' onChange={changes}/> </label>
                     <label> Triple Cheese Cream <input type='radio' name='sauce' value='triple' onChange={changes}/> </label>

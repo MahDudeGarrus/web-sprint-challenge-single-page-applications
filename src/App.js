@@ -49,7 +49,7 @@ const App = () => {
     })
   }
   
-  const postOrder = (newOrder) => {
+  const postOrder = newOrder => {
     axios
     .post('https://reqres.in/api/orders', newOrder)
     .then(response => {
@@ -57,6 +57,9 @@ const App = () => {
     })
     .catch(error => {
       console.log('Error posting data: ',error)
+    })
+    .finally(() => {
+      setPizzaOrder(initialPizzaForm)
     })
     
   }
@@ -66,27 +69,27 @@ const App = () => {
   }
 
   const submitHandler = () => {
-    const newPizzaOrder = {
+    const newOrder = {
     nameOfCust: pizzaOrder.nameOfCust.trim(),
     size: pizzaOrder.size.trim(),
-    // sauce: pizzaOrder.sauce,  // this doesn't pass on the codegrade test.
-    toppings1: pizzaOrder.toppings1.trim(),
-    toppings2: pizzaOrder.toppings2.trim(),
-    toppings3: pizzaOrder.toppings3.trim(),
-    toppings4: pizzaOrder.toppings4.trim(),
-    toppings5: pizzaOrder.toppings5.trim(),
-    toppings6: pizzaOrder.toppings6.trim(),
-    toppings7: pizzaOrder.toppings7.trim(),
-    toppings8: pizzaOrder.toppings8.trim(),
-    toppings9: pizzaOrder.toppings9.trim(),
-    toppings10: pizzaOrder.toppings10.trim(),
-    toppings11: pizzaOrder.toppings11.trim(),
-    toppings12: pizzaOrder.toppings12.trim(),
-    toppings13: pizzaOrder.toppings13.trim(),
-    toppings14: pizzaOrder.toppings14.trim(),
+    sauce: pizzaOrder.sauce,  // this doesn't pass on the codegrade test.
+    toppings1: pizzaOrder.toppings1,
+    toppings2: pizzaOrder.toppings2,
+    toppings3: pizzaOrder.toppings3,
+    toppings4: pizzaOrder.toppings4,
+    toppings5: pizzaOrder.toppings5,
+    toppings6: pizzaOrder.toppings6,
+    toppings7: pizzaOrder.toppings7,
+    toppings8: pizzaOrder.toppings8,
+    toppings9: pizzaOrder.toppings9,
+    toppings10: pizzaOrder.toppings10,
+    toppings11: pizzaOrder.toppings11,
+    toppings12: pizzaOrder.toppings12,
+    toppings13: pizzaOrder.toppings13,
+    toppings14: pizzaOrder.toppings14,
     special: pizzaOrder.special.trim(),
     }
-    postOrder(newPizzaOrder)
+    postOrder(newOrder)
   }
 
   //invoking data received from getOrder function
@@ -116,7 +119,7 @@ const App = () => {
       </Route>
 
       <Route path="/pizza">
-        <Form values={pizzaOrder} change={inputChange}/>
+        <Form values={pizzaOrder} change={inputChange} submit={submitHandler}/>
       </Route>
       
       <Route path="/confirmation">
