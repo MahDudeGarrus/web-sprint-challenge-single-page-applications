@@ -23,9 +23,9 @@ export default function Form(props) {
 
             <div className='errors'>
                 <div>{errors.nameOfCust}</div>
-                <div>{errors.size}</div>
+                {/* <div>{errors.size}</div>
                 <div>{errors.sauce}</div>
-                <div>{errors.special}</div>
+                <div>{errors.special}</div> */}
             </div>
 
             {/* NAME INPUT */}

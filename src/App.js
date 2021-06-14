@@ -37,23 +37,23 @@ const initialPizzaForm = {
 // initial error status
 const initialFormErrors = {
   nameOfCust: '',
-  size: '',
-  sauce: '',
-  toppings1: '',
-  toppings2: '',
-  toppings3: '',
-  toppings4: '',
-  toppings5: '',
-  toppings6: '',
-  toppings7: '',
-  toppings8: '',
-  toppings9: '',
-  toppings10: '',
-  toppings11: '',
-  toppings12: '',
-  toppings13: '',
-  toppings14: '',
-  special: '',
+  // size: '',
+  // sauce: '',
+  // toppings1: '',
+  // toppings2: '',
+  // toppings3: '',
+  // toppings4: '',
+  // toppings5: '',
+  // toppings6: '',
+  // toppings7: '',
+  // toppings8: '',
+  // toppings9: '',
+  // toppings10: '',
+  // toppings11: '',
+  // toppings12: '',
+  // toppings13: '',
+  // toppings14: '',
+  // special: '',
 }
 
 // the state of the submit button will start as disabled
@@ -89,10 +89,10 @@ const App = () => {
     yup.reach(schema, name)
     .validate(value)
     .then(() => {
-      setFormErrors({...formErrors, name: ""})
+      setFormErrors({...formErrors, [name]: ""})
     })
     .catch(error => {
-      setFormErrors({...formErrors, name: error.message})
+      setFormErrors({...formErrors, [name]: error.message})
     })
     
     //updating pizzaOrder with key:value pairs that are input
@@ -125,6 +125,7 @@ const App = () => {
     postOrder(newOrder)
   }
 
+  //side effect to see if form is valid and will enable button when requirements are met
   useEffect(() => {
     schema.isValid(pizzaOrder)
     .then(valid => {
