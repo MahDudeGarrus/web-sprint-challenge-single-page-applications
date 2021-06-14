@@ -2,8 +2,9 @@ import React, {useState, UseEffect} from 'react';
 
 export default function Form(props) {
 
-    const {values, change, submit} = props
+    const {values, change, submit, disabled, errors} = props
 
+    //helper for inputChanges function
     const changes = (event) => {
         const {name, value, type, checked} = event.target
         const valueToUse = type === "checkbox" ? checked : value
@@ -18,13 +19,24 @@ export default function Form(props) {
     
     return (
         <form id='pizza-form' onSubmit={onSubmit}>
-            <h2> Build Your Own Pizza! </h2>
+            <h1> Build Your Own Pizza! </h1>
+
+            <div className='errors'>
+                <div>{errors.nameOfCust}</div>
+                <div>{errors.size}</div>
+                <div>{errors.sauce}</div>
+                <div>{errors.special}</div>
+            </div>
+
+            {/* NAME INPUT */}
             <div className='nameOnOrder'>
                 <label>
                     Full Name:
                     <input id='name-input' name='nameOfCust' type='text' placeholder="Who is placing this order?" value={values.nameOfCust} onChange={changes}/>
                 </label>
             </div>
+
+            {/* SIZE INPUT */}
             <div className='sizeSelect'>
                 <h3> Choice of Size </h3>    
                     <label> 
@@ -38,7 +50,8 @@ export default function Form(props) {
                         </select>
                     </label>
             </div>
-            
+
+            {/* SAUCE INPUT */}
             <div className='sauceSelect'>
                 <h3>Choice of Sauce</h3>
                     <label> Tomato Sauce <input type='radio' name='sauce' value='tomato' onChange={changes}/> </label>
@@ -48,6 +61,7 @@ export default function Form(props) {
                     <label> Sundried Tomato Olive Oil <input type='radio' name='sauce' value='sundried' onChange={changes}/> </label>
             </div>
 
+            {/* TOPPINGS INPUT */}
             <div className='toppingsSelect'>
                 <h3> Add Toppings</h3>
                     <p>Choose up to 10</p>
@@ -68,6 +82,7 @@ export default function Form(props) {
                     <label> sardines <input type='checkbox' name="toppings14" onChange={changes} className='toppingsChoice'/> </label>
             </div>
 
+            {/* SPECIAL INPUT */}
             <div>
                 <h3>Special Instructions</h3>
                     <label>
@@ -75,8 +90,8 @@ export default function Form(props) {
                     </label>
             </div>
 
-            <button type='submit' id='order-button'>Add to Order!!</button>
-            
+            {/* SUBMIT BUTTON */}
+            <button disabled={disabled} type='submit' id='order-button'>Add to Order!!</button>       
         </form>
     )
 }

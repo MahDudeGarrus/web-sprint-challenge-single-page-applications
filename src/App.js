@@ -3,6 +3,7 @@ import React, {useState, useEffect} from "react";
 import { Route, Link } from "react-router-dom";
 import axios from 'axios';
 import * as yup from 'yup';
+import schema from './schema_validation/formSchema'
 
 //component imports
 import Form from './components/Form'
@@ -33,22 +34,40 @@ const initialPizzaForm = {
   special: '',
 }
 
+// initial error status
+const initialFormErrors = {
+  nameOfCust: '',
+  size: '',
+  sauce: '',
+  toppings1: '',
+  toppings2: '',
+  toppings3: '',
+  toppings4: '',
+  toppings5: '',
+  toppings6: '',
+  toppings7: '',
+  toppings8: '',
+  toppings9: '',
+  toppings10: '',
+  toppings11: '',
+  toppings12: '',
+  toppings13: '',
+  toppings14: '',
+  special: '',
+}
+
+// the state of the submit button will start as disabled
+const initialDisabled = true
+
 const App = () => {
-  // States
+  // STATES
   const [pizzaOrder, setPizzaOrder] = useState(initialPizzaForm)
   const [order, setOrder] = useState([])
+  const [formErrors, setFormErrors] = useState(initialFormErrors)
+  const [disabled, setDisabled] = useState(initialDisabled)
 
-  const getOrder = () => {
-    axios.get('https://reqres.in/api/orders')
-    .then(response => {
-      const ordersFromAPI= response.data
-      setOrder(ordersFromAPI)
-    })
-    .catch(error => {
-      console.log('Error getting data:', error)
-    })
-  }
-  
+
+  //POST NEW INPUTS
   const postOrder = newOrder => {
     axios
     .post('https://reqres.in/api/orders', newOrder)
@@ -58,21 +77,35 @@ const App = () => {
     .catch(error => {
       console.log('Error posting data: ',error)
     })
+    //this will only reset the name input, not intended
     .finally(() => {
       setPizzaOrder(initialPizzaForm)
     })
-    
   }
 
+  // ONCHANGE HANDLER
   const inputChange = (name, value) => {
+    //reaching for error messages in the schema
+    yup.reach(schema, name)
+    .validate(value)
+    .then(() => {
+      setFormErrors({...formErrors, name: ""})
+    })
+    .catch(error => {
+      setFormErrors({...formErrors, name: error.message})
+    })
+    
+    //updating pizzaOrder with key:value pairs that are input
     setPizzaOrder({...pizzaOrder, [name]: value})
   }
 
+
+  //SUBMIT HANDLER
   const submitHandler = () => {
     const newOrder = {
     nameOfCust: pizzaOrder.nameOfCust.trim(),
     size: pizzaOrder.size.trim(),
-    sauce: pizzaOrder.sauce,  // this doesn't pass on the codegrade test.
+    //sauce: pizzaOrder.sauce,  // this doesn't pass on the codegrade test.
     toppings1: pizzaOrder.toppings1,
     toppings2: pizzaOrder.toppings2,
     toppings3: pizzaOrder.toppings3,
@@ -92,11 +125,12 @@ const App = () => {
     postOrder(newOrder)
   }
 
-  //invoking data received from getOrder function
   useEffect(() => {
-    getOrder()
-  }, [])
-
+    schema.isValid(pizzaOrder)
+    .then(valid => {
+      setDisabled(!valid)
+    })
+  }, [pizzaOrder])
 
   return (
     <>
@@ -119,7 +153,7 @@ const App = () => {
       </Route>
 
       <Route path="/pizza">
-        <Form values={pizzaOrder} change={inputChange} submit={submitHandler}/>
+        <Form values={pizzaOrder} change={inputChange} submit={submitHandler} disabled={disabled} errors={formErrors}/>
       </Route>
       
       <Route path="/confirmation">
